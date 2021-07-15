@@ -1,0 +1,63 @@
+
+     {% extends 'header.html' %}
+     {% block content %}
+     {% load static %}
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">Ev_charging</a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                
+                <li><a href="{% url 'home' user.id %}">Home</a></li>
+                <li><a href="{% url 'charging' user.id %}">Charging</a></li>
+                <li class="active"><a href="#">About us</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                
+              </ul>
+              </div>
+            </div>
+          </nav>
+          <div class="container-fluid">
+<!--after nav--> 
+<div class="row">
+    <div class="jumbotron">
+        <h1>About Us {{user.username}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class=" col-sm-6"><div class="jumbotron">
+        <h2>Services</h2>
+        <a href="#"><span class=" glyphicon glyphicon-menu-hamburger"></span> Charging</a>
+    </div></div>
+    <div class=" col-sm-6"> <div class="jumbotron">
+        <h2>Contact</h2>
+        <a href="#"><span class=" glyphicon glyphicon-phone-alt"></span> +91 9898989898</a>&nbsp &nbsp &nbsp
+        <a href="#"><span class=" glyphicon glyphicon-phone-alt"></span> +91 9525952595</a>
+    </div></div>
+    <div class="col-sm-6"><div class="jumbotron">
+        <h2>Social Media</h2>
+        <a href="#"><span class="fa fa-twitter"></span>  Ev_charging.official</a>&nbsp &nbsp &nbsp
+        <a href="#"><span class="fa fa-instagram"></span>  Ev_charging.official</a>
+    </div></div>
+    <div class="col-sm-6"><div class="jumbotron">
+         <h2>Feadback</h2>
+         <a href="#"><span class="glyphicon glyphicon-comment"></span> Feadback</a>
+        </div></div>
+</div>
+
+    
+     
+    </div>
+    
+    {% endblock %}
+
+   

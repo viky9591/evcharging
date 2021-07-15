@@ -1,0 +1,158 @@
+{% extends 'header.html' %}
+     {% block content %}
+     {% load static %}
+     
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                  </button>
+                <a class="navbar-brand" href="#">Ev_charging</a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                
+               <!-- <li><a href="#">Home</a></li>
+                <li class="active"><a href="#">Charging</a></li>
+                <li><a href="#">About us</a></li>-->
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                
+              </ul>
+              </div>
+            </div>
+          </nav>
+          <div class="container-fluid">
+<!--after nav--> 
+<div class="row">
+    <div class="jumbotron">
+        <h1>Ev Admin page</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+    <div class="col-sm-6"><div class="jumbotron">
+        <h2>Add Manager..</h2>
+        <form class="form-horizontal" action="addman" method="POST">
+          {% csrf_token %}
+     
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="usr">Username:</label>
+              <div class="col-sm-12">          
+                <input type="text" class="form-control" id="usr" placeholder="Enter Username" name="username">
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pas">Password</label>
+                <div class="col-sm-12">
+                    <input type="password" class="form-control" id="pas" placeholder="Enter password" name="password">
+                </div>
+            </div>
+              
+             
+              <div class="form-group">        
+                <div class=" col-sm-12">
+                  <button type="submit" class="btn btn-default col-sm-12 btc">Add Manager</button>
+                </div>
+              </div>
+             
+            </form>
+    </div></div>
+    </div>
+    <div class="col-sm-12">
+    <div class="col-sm-6"><div class="jumbotron">
+        <h2>Add Station..</h2>
+        <form class="form-horizontal"  method="POST">
+          {% csrf_token %}
+          
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="usr">Location</label>
+              <div class="col-sm-12">          
+                <input type="text" class="form-control" id="usr" placeholder="Enter Location" name="loc">
+              </div>
+            </div>
+            
+              
+             
+              <div class="form-group">        
+                <div class=" col-sm-12">
+                  <button type="submit" class="btn btn-default col-sm-12 btc">Add</button>
+                </div>
+              </div>
+             
+            </form>
+        <h2>Add Slots</h2>
+        <form class="form-horizontal" action="addslots" method="POST">
+          {% csrf_token %}
+            
+            <div class="form-group">
+            
+              <div class="col-sm-6 col-md-4">
+                <select id="company"  name='location'  class="form-control">
+                  <option>--select--</option>
+                  {% for i in stations %}
+                  
+                  <option value="{{ i.location }}">{{ i.location }} </option>
+                      {% endfor %}
+                  
+                </select> 
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="slot">Enter Slot Number</label>
+                <div class="col-sm-12">
+                 <input type="text" name="slotno" class="form-control" id="slot" placeholder="Enter Slot Number">   
+                    
+                </div>
+                </div>
+                <div class="form-group">        
+                    <div class=" col-sm-12">
+                      <button type="submit" class="btn btn-default col-sm-12 btc">Add </button>
+                    </div>
+                  </div>
+            </div>
+        </form>
+    </div></div>
+    </div>
+    <div class=" col-sm-12"><div class="jumbotron">
+        <h2><span class="fa fa-user"></span> User Profiles</h2><hr>
+        <form action="userprofile" method="POST" >
+
+        <table class="table table-sprited"><tr><th>Username</th><th>Email</th><th>Phone Number</th><th>Requests</th></tr>
+          {% for i in userprofiles %}
+          {% csrf_token %}
+        <tr><td>{{ i.username }}</td><td>{{ i.email }}</td><td>{{ i.phoneno }}</td><td><button class="btn btn-danger" type="submit" name="id" value="{{ i.id }}">remove</button></td></tr>
+        
+        {% endfor %}
+        </table>
+        </form>
+
+    </div></div>
+    <div class=" col-sm-12"><div class="jumbotron">
+      <h2><span class="fa fa-plug"></span> Manage Slots</h2><hr>
+      
+        
+      <table class="table table-sprited">
+      <tr><th>location</th><th>Slot No</th><th colspan="2">Status</th></tr>
+      {% for i in slot %}
+      <tr><td>{{ i.station_id.location }}</td><td>{{ i.slotno }}</td><td>{{ i.booking_status }}</td><td><form action="admin_activate" method="POST" >{% csrf_token %}<button type="submit" name="slno" value="{{ i.slotno }}" class="btn btn-info">activate</button></form></td><td><form action="admin_desable" method="POST" >{% csrf_token %}<button type="submit" name="slno" value="{{ i.slotno }}" class="btn btn-warning">desable</button></form></td></tr>
+      
+      {% endfor %}
+      
+      </table>
+      
+
+  </div></div>
+    
+</div>
+
+    
+     
+    </div>
+    
+   
+{% endblock %}

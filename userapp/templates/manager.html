@@ -1,0 +1,115 @@
+{% extends 'header.html' %}
+     {% block content %}
+     {% load static %}
+     
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">Ev_charging</a>
+              </div>
+              <div class="collapse  navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                
+               <!-- <li><a href="#">Home</a></li>
+                <li class="active"><a href="#">Charging</a></li>
+                <li><a href="#">About us</a></li>-->
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                
+              </ul>
+            </div>
+            </div>
+          </nav>
+          <div class="container-fluid">
+<!--after nav--> 
+<div class="row">
+    <div class="jumbotron">
+        <h1>Ev manager page</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6"><div class="jumbotron">
+        <h2>Activate Charging..</h2>
+        <form class="form-horizontal" method="POST" action="acharging ">
+
+          {% csrf_token %}
+     
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="usr">Enter Booking No:</label>
+              <div class="col-sm-12">          
+                <input type="text" class="form-control" id="usr" placeholder="Enter Booking No" name="bookingno">
+              </div>
+            </div>
+            
+              
+             
+              <div class="form-group">        
+                <div class=" col-sm-12">
+                  <button type="submit" class="btn btn-default col-sm-12 btc">Start Charging</button>
+                </div>
+              </div>
+             
+            </form>
+    </div></div>
+    <div class=" col-sm-12"><div class="jumbotron">
+      <form method="POST" action="allow_user">
+      {% csrf_token %}
+        <h2><span class="fa fa-user"></span> User Profiles</h2><hr>
+        <table class="table table-sprited"><tr><th>Username</th><th>Email</th><th>Phone Number</th><th colspan="2">Requests</th></tr>
+          {% for i in temp %}
+        <tr><td>{{ i.username }}</td><td>{{ i.email }}</td><td>{{ i.phoneno }}</td><td><button type="submit" name="id" value="{{ i.id }} " class="btn btn-success">allow</button></td></tr>
+        {% endfor %}
+        
+        </table>
+        </form>
+        
+    </div></div>
+    <div class=" col-sm-12"><div class="jumbotron">
+        <h2><span class="fa fa-plug"></span> Manage Slots</h2><hr>
+        
+          
+        <table class="table table-sprited">
+        <tr><th>location</th><th>Slot No</th><th colspan="2">Status</th></tr>
+        {% for i in slot %}
+        <tr><td>{{ i.station_id.location }}</td><td>{{ i.slotno }}</td><td>{{ i.booking_status }}</td><td><form action="activate" method="POST" >{% csrf_token %}<button type="submit" name="slno" value="{{ i.slotno }}" class="btn btn-info">activate</button></form></td><td><form action="desable" method="POST" >{% csrf_token %}<button type="submit" name="slno" value="{{ i.slotno }}" class="btn btn-warning">desable</button></form></td></tr>
+        
+        {% endfor %}
+        
+        </table>
+        
+
+    </div></div>
+    <div class="col-sm-6"><div class="jumbotron">
+        
+        <h2>Booking history..</h2>
+        <table class="table table-sprited">
+            <tr><th>Userid</th><th>Booking no</th><th>slotno</th> <th>Location</th><th>Date</th></tr>
+            {% for i in history %}
+            <tr><td>{{ i.username }}</td><td>{{ i.bookingNo }}</td><td>{{ i.slotno }}</td><td>{{ i.location }}</td><td>{{ i.dateTime }}</td></tr>
+            
+            {% endfor %}
+        </table>
+        
+    </div></div>
+    <div class="col-sm-6"><div class="jumbotron hidden-xs hidden-sm hidden-lg " >
+         <h2>Slot request</h2><br>
+         <table class="table table-striped">
+            <tr><th>Userid</th><th>Booking no</th> <th>Location</th><th>Slot no</th><th colspan="2">Status</th></tr>
+            <tr><td>viky123</td><td>32452</td><td>mysore</td><td>204</td><td><span class="btn btn-success">allow</span></td><td><span class="btn btn-danger">deny</span></td></tr>
+            <tr><td>viky123</td><td>32452</td><td>mysore</td><td>204</td><td><span class="btn btn-success">allow</span></td><td><span class="btn btn-danger">deny</span></td></tr>
+         </table>
+        </div></div>
+</div>
+
+    
+     
+    </div>
+    
+   
+{% endblock %}
